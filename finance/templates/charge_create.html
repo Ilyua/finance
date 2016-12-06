@@ -1,0 +1,7 @@
+<form action=" charge_create" method="post">
+  	{% csrf_token %}
+ 	{{form.date}}<br>
+ 	 Value 
+ 	{{ form.value }} <!-- equal <input type="number" name="value"> -->
+ 	 <button type="submit">Create</button>
+ </form>

@@ -1,0 +1,8 @@
+<p><a href = "/">Main</a></p>
+ <form action="/charge_choose_acc/" method="post">
+{% csrf_token %}
+<p>Введите имя аккаунта</p>
+  {{ form }} <!-- equal <input type="number" name="value"> -->
+  <button type="submit">Input</button>
+ 
+</form>
