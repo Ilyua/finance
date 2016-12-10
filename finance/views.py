@@ -109,7 +109,7 @@ def charges(request):
 		form = ChargeForm(request.POST)
 		info = ''
 		if form.is_valid():
-			info = ''
+			info = 'ф'
 			value = form.save()
 			for val in Charge.objects.all():
 				print(val.value)
