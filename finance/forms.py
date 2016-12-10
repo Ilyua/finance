@@ -8,7 +8,7 @@ from .models import Charge,Account,Profile
 
 
 class ProfileFrom(ModelForm):
-	class Meta:#зачем нужен класс мета? как то долго писать все поля,нельзя ли сразу их перенести из модели?
+	class Meta:#
 		model = Profile
 		fields = ['address','phoneNumber']
 

@@ -20,4 +20,5 @@ urlpatterns = [
  url(r'^admin/', admin.site.urls),
  url(r'^', include('finance.urls')),
  url('^', include('django.contrib.auth.urls')),
+ url(r'^accounts/', include('registration.urls')),
 ]

@@ -4,44 +4,43 @@ from django.http import HttpResponse
 from .forms import ChargeForm,AccountForm
 from .models import Charge, Account,Profile
 
-from django.views.generic.edit import FormView
-from django.contrib.auth.forms import UserCreationForm#что это за сложнейшие библиотеки?у них есть особенные свойства?
 
 def Main(request):
 		return render(request, 'root.html',{'info': "Start page"})
 def UserRegister(FormView):
-	
+	ass	
 def UserLogin():
-
+	pass
 def UserLogout():
-
+	pass
 def ProfileEdit():
-
+	pass
 def AccountList():
-
+	pass
 def Account():
-
+	pass
 def AccountStat():
-
+	pass
 def AccountReport():
-
+	pass
 def AccountCreate():
-
+	pass
 def AccountEdit():
-
+	pass
 def AccountDelete():
-
+	pass
 def ChargeCreate():
-
+	pass
 def ChargeEdit():
-
+	pass
 def ChargeDelete():
-
+	pass
 def UserList():
-
+	pass
 def UserEdit():
-	
+	pass	
 def UserDelete():
+	pass
 
 
 
@@ -99,9 +98,7 @@ def UserDelete():
 
 
 
-
-
-def root(request):
+'''def root(request):
 	for val in Account.objects.all():
 		print(val.name)
 	#Account.objects.all().delete()
@@ -110,9 +107,9 @@ def charges(request):
 	if request.method == 'POST':
 		#a = Charge.objects.get(pk=1)
 		form = ChargeForm(request.POST)
-		info = 'Форма заполнена, но некорректна'
+		info = ''
 		if form.is_valid():
-			info = 'Форма заполнена и корректна'
+			info = ''
 			value = form.save()
 			for val in Charge.objects.all():
 				print(val.value)
@@ -121,7 +118,7 @@ def charges(request):
 		return render(request, 'charges.html',{'info': info})
 
 	else:
-		info = 'Форма не заполнена'
+		info = ''
 		form = ChargeForm()
 	return render(request, 'charges.html',{'info': info})
 
@@ -209,4 +206,4 @@ def charge_create(request, nameacc):
 	return render(
 		request, 'charge_create.html',
 		{'form': form}
-	)
+	)'''
