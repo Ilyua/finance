@@ -2,8 +2,9 @@
 # activate.html
 {% extends "base.html" %}
 {% block content %}
+{% csrf_token %}
 <h1>Активация</h1>
 Привет, {{ account }}!<br/>
-Ваша учетная запись активирована. <a href="{% url auth_login %}">Заходите</a> на сайт.
+Ваша учетная запись активирована. <a href="{% url 'auth_login' %}">Заходите</a> на сайт.
 <br/><br/>
 {% endblock %}

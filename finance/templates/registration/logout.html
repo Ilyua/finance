@@ -1,0 +1,7 @@
+# templates/registration/logout.html
+{% extends "base.html"  %}
+{% block content %}
+{% csrf_token %}
+<h1>Выход</h1>
+Спасибо, что были с нами. Ждем вас снова.<br/><br/>
+{% endblock %}
