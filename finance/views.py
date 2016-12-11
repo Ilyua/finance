@@ -35,19 +35,19 @@ def AccountCreate(request):
 	if request.method == 'POST':
 
 		form = AccountForm(request.POST)
-		print(1)
+		
 		if form.is_valid():
-			print(2)
-			a = form.save(commit=False)
-			print(3)
-			a.account = profile
-			print(4)
-			a.accountNumber = a.id
-			print(5)
-			a.save()
-			print(6)
-			return redirect('Account', nameacc = a.name)
 			
+			a = form.save(commit=False)
+			
+			a.account = profile
+			
+			a.accountNumber = a.id
+			
+			a.save()
+			
+			return redirect('Account', nameacc = a.name)
+
 	else:
 		form = AccountForm()
 	return render(request, 'account_create.html',{'form': form})
@@ -58,7 +58,8 @@ def AccountEdit():
 	pass
 def AccountDelete(request,nameacc):
 		account = Account.objects.get(profile__user=request.user)
-		account.delete()
+		a = account.objects.get(name = nameacc)
+		a.delete()
 		return render(request, 'profile.html',{'info': "Profile"}) 
 def ChargeCreate():
 	pass
