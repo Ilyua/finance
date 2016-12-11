@@ -57,8 +57,11 @@ def AccountCreate(request):
 def AccountEdit():
 	pass
 def AccountDelete(request,nameacc):
-		account = Account.objects.get(profile__user=request.user)
-		a = account.objects.get(name = nameacc)
+		p = get_object_or_404(Profile, user = request.user)
+		a = p.account_set.all().get(name = nameacc)
+
+		#Account.objects.get(profile__user=request.user)
+		#a = account.objects.get(name = nameacc)
 		a.delete()
 		return render(request, 'profile.html',{'info': "Profile"}) 
 def ChargeCreate():
