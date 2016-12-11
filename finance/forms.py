@@ -8,9 +8,9 @@ from .models import Charge,Account,Profile
 
 
 class ProfileFrom(ModelForm):
-	class Meta:#
+	class Meta:
 		model = Profile
-		fields = ['address','phoneNumber']
+		fields = ['user']
 
 class ChargeForm(ModelForm):
 	class Meta:
@@ -20,7 +20,7 @@ class ChargeForm(ModelForm):
 class AccountForm(ModelForm):
 	class Meta:
 		model = Account
-		fields = ['name','account','accountNumber']
+		fields = ['name']#,'account','accountNumber']
 		
 	def clean_name(self):
 		temp = self.cleaned_data.get('name')

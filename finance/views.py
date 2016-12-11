@@ -6,29 +6,60 @@ from .models import Charge, Account,Profile
 
 
 def Main(request):
-		return render(request, 'root.html',{'info': "Start page"})
+	return render(request, 'root.html',{'info': "Start page"})
 def UserRegister(FormView):
-	ass	
+	pass	
 def UserLogin():
 	pass
 def UserLogout():
 	pass
-def ProfileEdit():
-	pass
-def AccountList():
-	pass
-def Account():
-	pass
+def ProfileEdit(request):
+	profile = Profile.objects.get_or_create(user=request.user)
+	
+	return render(request, 'profile.html',{'info': "Profile"})
+	
+def AccountList(request):
+	Profile = get_object_or_404(Profile, user = request.user)
+	#Profile.account_set.all()
+	return render (request,'account.html',{'form': nameacc})
+
+def Account(request,nameacc):
+	return render(request, 'account.html',{'name': nameacc})
+
 def AccountStat():
 	pass
 def AccountReport():
 	pass
-def AccountCreate():
-	pass
+def AccountCreate(request):
+	profile = get_object_or_404(Profile, user = request.user)
+	if request.method == 'POST':
+
+		form = AccountForm(request.POST)
+		print(1)
+		if form.is_valid():
+			print(2)
+			a = form.save(commit=False)
+			print(3)
+			a.account = profile
+			print(4)
+			a.accountNumber = a.id
+			print(5)
+			a.save()
+			print(6)
+			return redirect('Account', nameacc = a.name)
+			
+	else:
+		form = AccountForm()
+	return render(request, 'account_create.html',{'form': form})
+	
+	
+			
 def AccountEdit():
 	pass
-def AccountDelete():
-	pass
+def AccountDelete(request,nameacc):
+		account = Account.objects.get(profile__user=request.user)
+		account.delete()
+		return render(request, 'profile.html',{'info': "Profile"}) 
 def ChargeCreate():
 	pass
 def ChargeEdit():
@@ -98,7 +129,24 @@ def UserDelete():
 
 
 
-'''def root(request):
+'''
+
+if request.method == 'POST':
+			form = AccountForm(request.POST)
+			if form.is_valid():
+				Account = form.save(commit = False)
+				Account.account = get_object_or_404(Profile, user = request.user)
+				Account.accountNumber = Account.id
+				Account.save()
+				return redirect('Account', nameacc = Account.name)
+				
+	else:
+		form = AccountForm()
+	return render(request, 'account_create.html',{'form': form})
+			
+
+
+def root(request):
 	for val in Account.objects.all():
 		print(val.name)
 	#Account.objects.all().delete()
