@@ -10,7 +10,7 @@ class Profile(models.Model):
 	
 class Account(models.Model):
 	name = models.CharField(max_length=200)
-	account = models.ForeignKey(Profile)#, on_delete=models.CASCADE)
+	account = models.ForeignKey(Profile)#,related_name='accounts')#, on_delete=models.CASCADE)#тут сливу навешивают
 	#accountNumber =  models.IntegerField()
   
 class Charge(models.Model):

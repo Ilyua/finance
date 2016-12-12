@@ -19,14 +19,21 @@ def ProfileEdit(request):
 	return render(request, 'profile.html',{'info': "Profile"})
 	
 def AccountList(request):
-	Profile = get_object_or_404(Profile, user = request.user)
-	#Profile.account_set.all()
+	accs = Account.objects.filter(account__user=request.user)
+	a.objects()
 	return render (request,'account.html',{'form': nameacc})
 
-def Account(request,nameacc):
+def Acc(request,nameacc):#был конфликт с названием модели
+	#p = get_object_or_404(Profile, user = request.user)
+	accs = Account.objects.filter(account__user=request.user)
+	a = get_object_or_404(accs, name = nameacc)
+		#a = p.account_set.all().get(name = nameacc)
+	
+	
+	
 	return render(request, 'account.html',{'name': nameacc})
 
-def AccountStat():
+def AccountStat(request):
 	pass
 def AccountReport():
 	pass
@@ -45,7 +52,7 @@ def AccountCreate(request):
 			a.accountNumber = a.id
 			
 			a.save()
-			
+			#print(type(a.name))
 			return redirect('Account', nameacc = a.name)
 
 	else:
@@ -54,8 +61,30 @@ def AccountCreate(request):
 	
 	
 			
-def AccountEdit():
-	pass
+def AccountEdit(request,nameacc):
+	accs = Account.objects.filter(account__user=request.user)
+	a = get_object_or_404(accs, name = nameacc)
+	if request.method == 'POST':
+
+		form = AccountForm(request.POST)
+		
+		if form.is_valid():
+			
+			f = form.save(commit=False)
+			a.name = f.name
+			a.save()
+			#a.account = profile
+			
+			#a.accountNumber = a.id#не знаю как лучше
+			
+			
+			#print(type(a.name))
+			return redirect('Account', nameacc = a.name)
+
+	else:
+		form = AccountForm()
+	return render(request, 'account_edit.html',{'form': form})
+
 def AccountDelete(request,nameacc):
 		p = get_object_or_404(Profile, user = request.user)
 		a = p.account_set.all().get(name = nameacc)
