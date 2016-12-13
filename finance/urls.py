@@ -11,6 +11,7 @@ urlpatterns = [
 	url(r'^accounts/profile/(?P<nameacc>\w+)/$',views.Acc ,name = 'Account'),
 	url(r'^accounts/profile/(?P<nameacc>\w+)/account_delete/$',views.AccountDelete ,name = 'AccountDelete'),
 	url(r'^accounts/profile/(?P<nameacc>\w+)/account_edit/$',views.AccountEdit ,name = 'AccountEdit'),
+	url(r'^accounts/profile/(?P<nameacc>\w+)/charge_create/$',views.ChargeCreate ,name = 'ChargeCreate'),
 
 
 

@@ -1,7 +1,9 @@
-<form action=" charge_create" method="post">
+<form action="{% url 'ChargeCreate' name %}" method="post">
   	{% csrf_token %}
- 	{{form.date}}<br>
+  	{{form.errors}}<br>
  	 Value 
- 	{{ form.value }} <!-- equal <input type="number" name="value"> -->
+ 	{{form.transactedAt}}<br>
+ 	 Value 
+ 	{{ form.amount }} <!-- equal <input type="number" name="value"> -->
  	 <button type="submit">Create</button>
  </form>

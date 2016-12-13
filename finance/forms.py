@@ -16,7 +16,7 @@ class ProfileFrom(ModelForm):
 class ChargeForm(ModelForm):
 	class Meta:
 		model = Charge
-		fields = ['account','transactedAt','amount']	
+		fields = ['amount','transactedAt']	
 
 class AccountForm(ModelForm):
 	class Meta:
