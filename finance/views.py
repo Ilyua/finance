@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404,render_to_response
 from django.http import HttpResponse
-
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ChargeForm,AccountForm
 from .models import Charge, Account,Profile
 
@@ -20,17 +20,38 @@ def ProfileEdit(request):
 	
 def AccountList(request):
 	accs = Account.objects.filter(account__user=request.user)
-	a.objects()
-	return render (request,'account.html',{'form': nameacc})
+	paginator = Paginator(accs,10)
+	page = request.GET.get('page')
+	try:
+		accounts = paginator.page(page)
+	except PageNotAnInteger:
+		# If page is not an integer, deliver first page.
+		accounts = paginator.page(1)
+	except EmptyPage:
+	# If page is out of range (e.g. 9999), deliver last page of results.
+		accounts = paginator.page(paginator.num_pages)
 
+	return render_to_response('account_list.html', {"accounts": accounts})
+	#return render (request,'account.html',{'form': nameacc})
+def AccountChange(request):
+	accs = Account.objects.filter(account__user=request.user)
+	if request.method == 'POST':
+		aname = request.POST['name']
+		
+		acc = get_object_or_404(accs, name = aname)
+			#print(type(a.name))
+		return redirect('Account', nameacc = acc.name)
+		
+			
+	else:
+		form = AccountForm()
+	return render(request, 'account_change.html',{'form': form})
 def Acc(request,nameacc):#был конфликт с названием модели
+
 	#p = get_object_or_404(Profile, user = request.user)
 	accs = Account.objects.filter(account__user=request.user)
 	a = get_object_or_404(accs, name = nameacc)
 		#a = p.account_set.all().get(name = nameacc)
-	
-	
-	
 	return render(request, 'account.html',{'name': nameacc})
 
 def AccountStat(request):
@@ -53,8 +74,9 @@ def AccountCreate(request):
 			
 			a.save()
 			#print(type(a.name))
-			return redirect('Account', nameacc = a.name)
-
+			return redirect('AccountList')#, nameacc = a.name)
+		else:
+			render(request, 'account_create.html',{'form': form})
 	else:
 		form = AccountForm()
 	return render(request, 'account_create.html',{'form': form})
@@ -62,28 +84,28 @@ def AccountCreate(request):
 	
 			
 def AccountEdit(request,nameacc):
-	accs = Account.objects.filter(account__user=request.user)
-	a = get_object_or_404(accs, name = nameacc)
+	a = Account.objects.get(account__user=request.user,name = nameacc)
+	#a = get_object_or_404(accs, name = nameacc)
 	if request.method == 'POST':
 
-		form = AccountForm(request.POST)
+		form = AccountForm(request.POST,instance = a)
 		
 		if form.is_valid():
 			
-			f = form.save(commit=False)
-			a.name = f.name
-			a.save()
+			form.save()
+			#a.name = f.name
+			#a = a.save()
 			#a.account = profile
 			
 			#a.accountNumber = a.id#не знаю как лучше
-			
+		
 			
 			#print(type(a.name))
 			return redirect('Account', nameacc = a.name)
 
 	else:
 		form = AccountForm()
-	return render(request, 'account_edit.html',{'form': form})
+	return render(request, 'account_edit.html',{'form': form,'name':nameacc})#господи,зачем здесь nameacc??
 
 def AccountDelete(request,nameacc):
 		p = get_object_or_404(Profile, user = request.user)
@@ -93,8 +115,32 @@ def AccountDelete(request,nameacc):
 		#a = account.objects.get(name = nameacc)
 		a.delete()
 		return render(request, 'profile.html',{'info': "Profile"}) 
-def ChargeCreate():
-	pass
+def ChargeCreate(request,nameacc):
+	#profile = get_object_or_404(Profile, user = request.user)
+	accs = Account.objects.filter(account__user=request.user)#спросить.может можно
+	a = get_object_or_404(accs, name = nameacc)
+	if request.method == 'POST':
+
+		form = ChargeForm(request.POST)
+		
+		if form.is_valid():
+			
+			f = form.save(commit=False)
+			
+			f.account = a
+			
+			
+			
+			f.save()
+			#print(type(a.name))
+			return redirect('AccountList', nameacc = a.name)
+		else:
+			render(request, 'charge_create.html',{'form': form})
+	else:
+		form = ChargeForm()
+	return render(request, 'account_create.html',{'form': form})
+	
+	
 def ChargeEdit():
 	pass
 def ChargeDelete():

@@ -1,0 +1,8 @@
+<p><a href = "/">Main</a></p>
+ <form action="{% url 'AccountChange'%}" method="post">
+{% csrf_token %}
+{{form.errors}}
+  {{ form.name }} <!-- equal <input type="number" name="value"> -->
+  <button type="submit">Create</button>
+ 
+</form>

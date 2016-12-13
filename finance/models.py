@@ -9,7 +9,7 @@ class Profile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)#?
 	
 class Account(models.Model):
-	name = models.CharField(max_length=200)
+	name = models.CharField(max_length=200,unique = True)
 	account = models.ForeignKey(Profile)#,related_name='accounts')#, on_delete=models.CASCADE)#тут сливу навешивают
 	#accountNumber =  models.IntegerField()
   

@@ -1,0 +1,22 @@
+{% for account in accounts %}
+    {# Each "account" is a Account model object. #}
+    {{ account.name|upper }}<br />
+    ...
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if accounts.has_previous %}
+            <a href="?page={{ accounts.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ accounts.number }} of {{ accounts.paginator.num_pages }}.
+        </span>
+
+        {% if accounts.has_next %}
+            <a href="?page={{ accounts.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+<a href="{% url 'Profile' %}">Ваш профиль</a>.<br/><br/>

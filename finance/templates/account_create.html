@@ -1,7 +1,9 @@
 <p><a href = "/">Main</a></p>
  <form action="{% url 'AccountCreate'%}" method="post">
 {% csrf_token %}
+{{form.errors}}
   {{ form.name }} <!-- equal <input type="number" name="value"> -->
   <button type="submit">Create</button>
  
 </form>
+<a href="{% url 'Profile' %}">Ваш профиль</a>.<br/><br/>
